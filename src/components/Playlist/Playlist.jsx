@@ -8,6 +8,7 @@ const Playlist = (props) => {
     <ul className={s.playlist}>
       <li className={item.single}>
         <p className={item.singleText}>View</p>
+        <p className={item.singleText}>Edit</p>
         <p className={item.singleText}>Singer Name</p>
         <p className={item.singleText}>Song Title</p>
         <p className={item.singleText}>Release Date</p>
@@ -19,6 +20,8 @@ const Playlist = (props) => {
           singer={single.singer}
           song={single.song}
           date={single.date}
+          onSubmitEdit={props.onEditForm}
+          onDelete={props.onDelete}
         />
       ))}
     </ul>

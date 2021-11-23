@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import s from "./Modal.module.scss";
 
 const Modal = (props) => {
-  const [singer, setSinger] = useState("");
-  const [song, setSong] = useState("");
-  const [date, setDate] = useState("");
+  let [singer, setSinger] = useState("");
+  let [song, setSong] = useState("");
+  let [date, setDate] = useState("");
   const onKeydown = (e) => {
     switch (e.key) {
       case "Escape":
@@ -17,6 +17,16 @@ const Modal = (props) => {
     props.onSubmit(singer, song, date);
     props.onClose();
   };
+  let onSubmitEdit = (e) =>{
+    e.preventDefault();
+    props.onSubmitEdit(props.id, singer, song, date)
+    props.onClose();
+  }
+  let handleDelete = (e) =>{
+    e.preventDefault();
+    props.onDelete(props.id);
+    props.onClose();
+  }
   useEffect(() => {
     document.addEventListener("keydown", onKeydown);
     return () => document.removeEventListener("keydown", onKeydown);
@@ -61,7 +71,6 @@ const Modal = (props) => {
                   required
                 />
               </div>
-
               <div className={s.inputContainer}>
                 <label htmlFor={s.singleName} className={s.label}>
                   Release Date
@@ -117,7 +126,73 @@ const Modal = (props) => {
         </div>
       </div>
     );
-  }
+  } else if(props.modalType === "edit"){
+    singer = props.singer;
+    date = props.date;
+    song = props.song;
+    return(
+      <div className={s.modal}>
+        <div className={s.modalDialog}>
+          <div className={s.modalHeader}>
+            <p className={s.modalTitle}>Edit single</p>
+            <span className={s.modalClose} onClick={props.onClose}>
+              &times;
+            </span>
+          </div>
+          <div className={s.modalContent}>
+            <form className={s.form} onSubmit={onSubmitEdit}>
+              <div className={s.inputContainer}>
+                <label htmlFor={s.singleAuthor} className={s.label}>
+                  Singer Name
+                </label>
+                <input
+                  id={s.singleAuthor}
+                  className={s.smallInput}
+                  type='text'
+                  value={singer}
+                  onChange={(e) => setSinger(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={s.inputContainer}>
+                <label htmlFor={s.singleName} className={s.label}>
+                  Song title
+                </label>
+                <input
+                  id={s.singleName}
+                  className={s.smallInput}
+                  type='text'
+                  value={song}
+                  onChange={(e) => setSong(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className={s.inputContainer}>
+                <label htmlFor={s.singleName} className={s.label}>
+                  Release Date
+                </label>
+                <input
+                  type='date'
+                  name=''
+                  id=''
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                />
+              </div>
+              <button type='submit' className={s.submitButton}>
+                Save Edit
+              </button>
+              <button onClick={handleDelete} className={s.deleteButton}>
+                Delete Single
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  };
 };
 
 export default Modal;
