@@ -6,10 +6,8 @@ const Modal = (props) => {
   const [song, setSong] = useState("");
   const [date, setDate] = useState("");
   useEffect(() => {
-    console.log(date);
     if (props.modalType === "edit") {
       setDate(props.date);
-
       setSinger(props.singer);
       setSong(props.song);
     }
