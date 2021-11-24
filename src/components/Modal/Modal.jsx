@@ -2,9 +2,18 @@ import React, { useEffect, useState } from "react";
 import s from "./Modal.module.scss";
 
 const Modal = (props) => {
-  let [singer, setSinger] = useState("");
-  let [song, setSong] = useState("");
-  let [date, setDate] = useState("");
+  const [singer, setSinger] = useState("");
+  const [song, setSong] = useState("");
+  const [date, setDate] = useState("");
+  useEffect(() => {
+    console.log(date);
+    if (props.modalType === "edit") {
+      setDate(props.date);
+
+      setSinger(props.singer);
+      setSong(props.song);
+    }
+  }, [props]);
   const onKeydown = (e) => {
     switch (e.key) {
       case "Escape":
@@ -17,16 +26,16 @@ const Modal = (props) => {
     props.onSubmit(singer, song, date);
     props.onClose();
   };
-  let onSubmitEdit = (e) =>{
+  let onSubmitEdit = (e) => {
     e.preventDefault();
-    props.onSubmitEdit(props.id, singer, song, date)
+    props.onSubmitEdit(props.id, singer, song, date);
     props.onClose();
-  }
-  let handleDelete = (e) =>{
+  };
+  let handleDelete = (e) => {
     e.preventDefault();
     props.onDelete(props.id);
     props.onClose();
-  }
+  };
   useEffect(() => {
     document.addEventListener("keydown", onKeydown);
     return () => document.removeEventListener("keydown", onKeydown);
@@ -93,7 +102,8 @@ const Modal = (props) => {
       </div>
     );
   } else if (props.modalType === "view") {
-      return(<div className={s.modal}>
+    return (
+      <div className={s.modal}>
         <div className={s.modalDialog}>
           <div className={s.modalHeader}>
             <p className={s.modalTitle}>Single view</p>
@@ -104,21 +114,15 @@ const Modal = (props) => {
           <div className={s.modalContent}>
             <div className={s.form}>
               <div className={s.inputContainer}>
-                <p className={s.label}>
-                  Singer Name
-                </p>
+                <p className={s.label}>Singer Name</p>
                 <p className={s.label}>{props.singer}</p>
               </div>
               <div className={s.inputContainer}>
-                <p className={s.label}>
-                  Song title
-                </p>
+                <p className={s.label}>Song title</p>
                 <p className={s.label}>{props.song}</p>
               </div>
               <div className={s.inputContainer}>
-                <p className={s.label}>
-                  Release Date
-                </p>
+                <p className={s.label}>Release Date</p>
                 <p className={s.label}>{props.date}</p>
               </div>
             </div>
@@ -126,11 +130,8 @@ const Modal = (props) => {
         </div>
       </div>
     );
-  } else if(props.modalType === "edit"){
-    singer = props.singer;
-    date = props.date;
-    song = props.song;
-    return(
+  } else if (props.modalType === "edit") {
+    return (
       <div className={s.modal}>
         <div className={s.modalDialog}>
           <div className={s.modalHeader}>
@@ -192,7 +193,7 @@ const Modal = (props) => {
         </div>
       </div>
     );
-  };
+  }
 };
 
 export default Modal;

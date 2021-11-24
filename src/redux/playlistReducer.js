@@ -4,6 +4,7 @@ const initialState = localStorage.getItem("playlist")
   ? JSON.parse(localStorage.getItem("playlist"))
   : {
       playlist: [],
+      searchFilter: '',
     };
 
 const playlistSlice = createSlice({
@@ -49,10 +50,14 @@ const playlistSlice = createSlice({
         }
     })
     localStorage.setItem('playlist', JSON.stringify(state));
+    },
+    CHANGE_FILTER: (state, action) =>{
+      state.searchFilter = action.payload;
+      localStorage.setItem('playlist', JSON.stringify(state));
     }
   },
 });
 
-export const { ADD_SINGLE, EDIT_SINGLE, DELETE_SINGLE } = playlistSlice.actions;
+export const { ADD_SINGLE, EDIT_SINGLE, DELETE_SINGLE, CHANGE_FILTER } = playlistSlice.actions;
 
 export default playlistSlice.reducer;
