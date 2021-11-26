@@ -2,16 +2,6 @@ import React, { useEffect, useState } from "react";
 import s from "./Modal.module.scss";
 
 const Modal = (props) => {
-  const [singer, setSinger] = useState("");
-  const [song, setSong] = useState("");
-  const [date, setDate] = useState("");
-  useEffect(() => {
-    if (props.modalType === "edit") {
-      setDate(props.date);
-      setSinger(props.singer);
-      setSong(props.song);
-    }
-  }, [props]);
   const onKeydown = (e) => {
     switch (e.key) {
       case "Escape":
