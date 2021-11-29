@@ -1,6 +1,6 @@
 import "./App.scss";
 import PlaylistContainer from "./components/PlaylistContainer";
-import Modalcontainer from "./components/ModalContainer";
+import ModalContainer from "./components/ModalContainer";
 
 let App = () => {
   return (

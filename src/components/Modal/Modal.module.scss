@@ -39,18 +39,22 @@
       flex-direction: column;
       align-items: center;
     }
-    .label {
+    label {
       margin: 5px 0;
       width: 100px;
     }
     .inputContainer {
       display: flex;
+      align-items: center;
       width: 100%;
     }
-    .smallInput {
+    input {
       margin: 5px 0;
       padding: 5px 0;
       flex-grow: 1;
+    }
+    p {
+      padding: 5px;
     }
     .submitButton {
       cursor: pointer;
@@ -61,7 +65,7 @@
       border-radius: 20px;
       background-color: #fff;
     }
-    .deleteButton{
+    .deleteButton {
       cursor: pointer;
       margin: 11px 0;
       width: 103px;

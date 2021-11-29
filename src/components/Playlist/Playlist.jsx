@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import s from "./Playlist.module.scss";
 import item from "./Single/Single.module.scss";
 import Single from "./Single";
-import searchIcon from './../../assets/images/search.png'
+import searchIcon from "./../../assets/images/search.png";
 
 const Playlist = (props) => {
-  let handleChange = (e) =>{
+  let handleChange = (e) => {
     var text = e.target.value.trim();
     props.onChangeFilter(text);
-  }
-
+  };
 
   return (
     <div className={s.playlistWrap}>
       <div className={s.search}>
-        <img src={searchIcon} className={s.searchImg} alt="" />
-        <input type="text" className={s.searchInput} value={props.search} onChange={handleChange}/>
+        <img src={searchIcon} className={s.searchImg} alt='' />
+        <input
+          type='text'
+          className={s.searchInput}
+          value={props.search}
+          onChange={handleChange}
+        />
       </div>
-      
+
       <ul className={s.playlist}>
         <li className={item.single}>
           <p className={item.singleText}>View</p>
@@ -34,6 +38,8 @@ const Playlist = (props) => {
             song={single.song}
             date={single.date}
             onSubmitEdit={props.onEditForm}
+            handleOpenCloseEdit={props.handleOpenCloseEdit}
+            handleOpenCloseView={props.handleOpenCloseView}
             onDelete={props.onDelete}
           />
         ))}

@@ -4,7 +4,7 @@ const initialState = localStorage.getItem("playlist")
   ? JSON.parse(localStorage.getItem("playlist"))
   : {
       playlist: [],
-      searchFilter: '',
+      searchFilter: "",
     };
 
 const playlistSlice = createSlice({
@@ -35,29 +35,30 @@ const playlistSlice = createSlice({
           if (!action.payload.singer) {
             return null;
           } else {
-            item.singer = action.payload.singer
-            item.song = action.payload.song
-            item.date = action.payload.date
+            item.singer = action.payload.singer;
+            item.song = action.payload.song;
+            item.date = action.payload.date;
           }
         }
       });
       localStorage.setItem("playlist", JSON.stringify(state));
     },
-    DELETE_SINGLE: (state, action) =>{
-      state.playlist.forEach((item, index)=>{
-        if (item.id === action.payload){
-            state.playlist.splice(index, 1);
+    DELETE_SINGLE: (state, action) => {
+      state.playlist.forEach((item, index) => {
+        if (item.id === action.payload) {
+          state.playlist.splice(index, 1);
         }
-    })
-    localStorage.setItem('playlist', JSON.stringify(state));
+      });
+      localStorage.setItem("playlist", JSON.stringify(state));
     },
-    CHANGE_FILTER: (state, action) =>{
+    CHANGE_FILTER: (state, action) => {
       state.searchFilter = action.payload;
-      localStorage.setItem('playlist', JSON.stringify(state));
-    }
+      localStorage.setItem("playlist", JSON.stringify(state));
+    },
   },
 });
 
-export const { ADD_SINGLE, EDIT_SINGLE, DELETE_SINGLE, CHANGE_FILTER } = playlistSlice.actions;
+export const { ADD_SINGLE, EDIT_SINGLE, DELETE_SINGLE, CHANGE_FILTER } =
+  playlistSlice.actions;
 
 export default playlistSlice.reducer;

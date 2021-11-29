@@ -1,50 +1,58 @@
-import React, { useCallback } from 'react';
-import Header from './Header';
+import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Playlist from './Playlist/Playlist';
-import { ADD_SINGLE, EDIT_SINGLE, DELETE_SINGLE, CHANGE_FILTER } from '../redux/playlistReducer';
-import { filterSearch, searchSelector, playlistSelector } from './../redux/selectors';
+import Playlist from "./Playlist/Playlist";
+import { CHANGE_FILTER } from "../redux/playlistReducer";
+import {
+  filterSearch,
+  searchSelector,
+  playlistSelector,
+} from "../redux/selectors";
+import { openClose } from "../redux/modalReducer";
+import HeaderContainer from "./HeaderContainer";
 
 const PlaylistContainer = () => {
-    let playlist;
-    let allPlaylist = useSelector(playlistSelector);
-    let searchPlaylist = useSelector(searchSelector)
-    let search = useSelector(filterSearch);
-    if(search == ""){
-        playlist = allPlaylist;
-    }
-    else{
-        playlist = searchPlaylist;
-    }
+  let playlist;
+  let allPlaylist = useSelector(playlistSelector);
+  let searchPlaylist = useSelector(searchSelector);
+  let search = useSelector(filterSearch);
+  if (search == "") {
+    playlist = allPlaylist;
+  } else {
+    playlist = searchPlaylist;
+  }
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const handleSubmitForm = useCallback(
-        (singer, song, date) =>{
-            dispatch(ADD_SINGLE({singer: singer, song: song, date: date}))
-        },[dispatch]
-    )
-    const handleEditForm = useCallback(
-        (id, singer, song, date) =>{
-            dispatch(EDIT_SINGLE({id:id, singer: singer, song: song, date: date}))
-        },[dispatch]
-    )
-    const handleDelete = useCallback(
-        (id)=>{
-            dispatch(DELETE_SINGLE(id))
-        },[dispatch]
-    )
-    const handleChangeFilter = useCallback(
-        (text)=>{
-            dispatch(CHANGE_FILTER(text))
-        },[dispatch]
-    )
-    return (
-        <div className='container'>
-            <Header onSubmit={handleSubmitForm}/>
-            <Playlist playlist={playlist} onEditForm={handleEditForm} onDelete={handleDelete} onChangeFilter={handleChangeFilter} search = {search} />
-        </div>
-    );
-}
+  let handleOpenCloseEdit = useCallback(
+    (id) => {
+      dispatch(openClose({ type: "edit", id: id }));
+    },
+    [dispatch]
+  );
+  let handleOpenCloseView = useCallback(
+    (id) => {
+      dispatch(openClose({ type: "view", id: id }));
+    },
+    [dispatch]
+  );
+  const handleChangeFilter = useCallback(
+    (text) => {
+      dispatch(CHANGE_FILTER(text));
+    },
+    [dispatch]
+  );
+  return (
+    <div className='container'>
+      <HeaderContainer />
+      <Playlist
+        playlist={playlist}
+        onChangeFilter={handleChangeFilter}
+        search={search}
+        handleOpenCloseEdit={handleOpenCloseEdit}
+        handleOpenCloseView={handleOpenCloseView}
+      />
+    </div>
+  );
+};
 
 export default PlaylistContainer;
