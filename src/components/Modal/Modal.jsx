@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import s from "./Modal.module.scss";
+import React, { useEffect, useCallback } from "react";
 import ModalForm from "./ModalForm/ModalForm";
 import ModalView from "./ModalView/ModalView";
 import ModalEdit from "./ModalEdit/ModalEdit";
@@ -10,12 +9,12 @@ const Modal = (props) => {
     return () => document.removeEventListener("keydown", onKeydown);
   });
 
-  const onKeydown = (e) => {
+  const onKeydown = useCallback((e) => {
     switch (e.key) {
       case "Escape":
         props.handleOpenClose();
     }
-  };
+  });
   let modals = {
     form: ModalForm,
     view: ModalView,
@@ -26,4 +25,4 @@ const Modal = (props) => {
   return modals[props.modalType](props);
 };
 
-export default Modal;
+export default React.memo(Modal);

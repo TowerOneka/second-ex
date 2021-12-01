@@ -6,8 +6,7 @@ import searchIcon from "./../../assets/images/search.png";
 
 const Playlist = (props) => {
   let handleChange = (e) => {
-    var text = e.target.value.trim();
-    props.onChangeFilter(text);
+    props.onChangeFilter(e.target.value);
   };
 
   return (
@@ -48,4 +47,4 @@ const Playlist = (props) => {
   );
 };
 
-export default Playlist;
+export default React.memo(Playlist);

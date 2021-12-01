@@ -1,5 +1,6 @@
 import React from "react";
 import s from "./../Modal.module.scss";
+import style from "./ModalView.module.scss";
 
 const ModalView = (props) => {
   return (
@@ -14,16 +15,16 @@ const ModalView = (props) => {
         <div className={s.modalContent}>
           <div className={s.form}>
             <div className={s.inputContainer}>
-              <p className={s.label}>Singer Name</p>
-              <p className={s.label}>{props.singer}</p>
+              <p className={style.label}>Singer Name</p>
+              <p className={style.label}>{props.singer}</p>
             </div>
             <div className={s.inputContainer}>
-              <p className={s.label}>Song title</p>
-              <p className={s.label}>{props.song}</p>
+              <p className={style.label}>Song title</p>
+              <p className={style.label}>{props.song}</p>
             </div>
             <div className={s.inputContainer}>
-              <p className={s.label}>Release Date</p>
-              <p className={s.label}>{props.date}</p>
+              <p className={style.label}>Release Date</p>
+              <p className={style.label}>{props.date}</p>
             </div>
           </div>
         </div>

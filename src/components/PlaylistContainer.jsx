@@ -3,29 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import Playlist from "./Playlist/Playlist";
 import { CHANGE_FILTER } from "../redux/playlistReducer";
 import {
-  filterSearch,
+  filterSearchSelector,
   searchSelector,
   playlistSelector,
 } from "../redux/selectors";
-import { openClose } from "../redux/modalReducer";
+import { CHANGE_INPUT, openClose } from "../redux/modalReducer";
 import HeaderContainer from "./HeaderContainer";
 
 const PlaylistContainer = () => {
-  let playlist;
-  let allPlaylist = useSelector(playlistSelector);
-  let searchPlaylist = useSelector(searchSelector);
-  let search = useSelector(filterSearch);
-  if (search == "") {
-    playlist = allPlaylist;
-  } else {
-    playlist = searchPlaylist;
-  }
-
+  let playlist = useSelector(searchSelector);
+  let search = useSelector(filterSearchSelector);
   const dispatch = useDispatch();
 
   let handleOpenCloseEdit = useCallback(
-    (id) => {
+    (id, singer, song, date) => {
       dispatch(openClose({ type: "edit", id: id }));
+      dispatch(CHANGE_INPUT({ singer: singer, song: song, date: date }));
     },
     [dispatch]
   );

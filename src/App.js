@@ -4,10 +4,10 @@ import ModalContainer from "./components/ModalContainer";
 
 let App = () => {
   return (
-    <div>
+    <>
       <PlaylistContainer />
       <ModalContainer />
-    </div>
+    </>
   );
 };
 

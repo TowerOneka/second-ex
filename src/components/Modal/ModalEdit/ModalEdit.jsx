@@ -1,7 +1,9 @@
 import React from "react";
 import s from "./../Modal.module.scss";
+import style from "./ModalEdit.module.scss";
 
 const ModalEdit = (props) => {
+  console.log(props.id);
   let handleChangeSinger = (e) => {
     props.handleChangeSinger(e.target.value);
   };
@@ -13,7 +15,7 @@ const ModalEdit = (props) => {
   };
   let onSubmitEdit = (e) => {
     e.preventDefault();
-    props.onSubmitEdit(props.id, props.singer, props.song, props.date);
+    props.onEditForm(props.id, props.singer, props.song, props.date);
     props.handleOpenClose();
   };
   let handleDelete = (e) => {
@@ -38,7 +40,7 @@ const ModalEdit = (props) => {
               </label>
               <input
                 id={s.singleAuthor}
-                className={s.smallInput}
+                className={style.smallInput}
                 type='text'
                 value={props.singer}
                 onChange={handleChangeSinger}
@@ -51,7 +53,7 @@ const ModalEdit = (props) => {
               </label>
               <input
                 id={s.singleName}
-                className={s.smallInput}
+                className={style.smallInput}
                 type='text'
                 value={props.song}
                 onChange={handleChangeSong}
@@ -65,6 +67,7 @@ const ModalEdit = (props) => {
               </label>
               <input
                 type='date'
+                className={style.smallInput}
                 name=''
                 id=''
                 value={props.date}
@@ -72,10 +75,10 @@ const ModalEdit = (props) => {
                 required
               />
             </div>
-            <button type='submit' className={s.submitButton}>
+            <button type='submit' className={style.submitButton}>
               Save Edit
             </button>
-            <button onClick={handleDelete} className={s.deleteButton}>
+            <button onClick={handleDelete} className={style.deleteButton}>
               Delete Single
             </button>
           </form>

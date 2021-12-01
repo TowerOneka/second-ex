@@ -30,6 +30,7 @@ const playlistSlice = createSlice({
       localStorage.setItem("playlist", JSON.stringify(state));
     },
     EDIT_SINGLE: (state, action) => {
+      console.log(action);
       state.playlist.forEach((item) => {
         if (item.id === action.payload.id) {
           if (!action.payload.singer) {

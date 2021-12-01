@@ -5,6 +5,7 @@ import {
   CHANGE_DATE,
   CHANGE_SINGER,
   CHANGE_SONG,
+  EMPTY_INPUT,
   openClose,
 } from "../redux/modalReducer";
 import {
@@ -13,17 +14,17 @@ import {
   DELETE_SINGLE,
 } from "../redux/playlistReducer";
 import { modalSelector } from "../redux/selectors";
-import { modalEdit, modalView } from "../redux/selectors";
+import { modalEditSelector, modalViewSelector } from "../redux/selectors";
 
 const ModalContainer = () => {
   const modal = useSelector(modalSelector);
-  const playlistEdit = useSelector(modalEdit);
-  const playlistView = useSelector(modalView);
+  const playlistEdit = useSelector(modalEditSelector);
+  const playlistView = useSelector(modalViewSelector);
 
   let modalInput = {
     form: modal,
-    view: playlistView[Number(modal.openId)],
-    edit: playlistEdit[Number(modal.openId)],
+    view: playlistView[0],
+    edit: playlistEdit,
   };
   const dispatch = useDispatch();
   let handleChangeSong = useCallback(
@@ -46,43 +47,46 @@ const ModalContainer = () => {
   );
   let handleOpenClose = useCallback(() => {
     dispatch(openClose({ type: "form" }));
+    dispatch(EMPTY_INPUT());
   }, [dispatch]);
   const handleSubmitForm = useCallback(
     (singer, song, date) => {
       dispatch(ADD_SINGLE({ singer: singer, song: song, date: date }));
+      dispatch(EMPTY_INPUT());
     },
     [dispatch]
   );
   const handleEditForm = useCallback(
     (id, singer, song, date) => {
       dispatch(EDIT_SINGLE({ id: id, singer: singer, song: song, date: date }));
+      dispatch(EMPTY_INPUT());
     },
     [dispatch]
   );
   const handleDelete = useCallback(
     (id) => {
       dispatch(DELETE_SINGLE(id));
+      dispatch(EMPTY_INPUT());
     },
     [dispatch]
   );
 
   return (
-    <div>
-      <Modal
-        onSubmit={handleSubmitForm}
-        onEditForm={handleEditForm}
-        onDelete={handleDelete}
-        visible={modal.isOpen}
-        singer={modalInput[modal.modalType].singer}
-        song={modalInput[modal.modalType].song}
-        date={modalInput[modal.modalType].date}
-        handleOpenClose={handleOpenClose}
-        handleChangeSinger={handleChangeSinger}
-        handleChangeSong={handleChangeSong}
-        handleChangeDate={handleChangeDate}
-        modalType={modal.modalType}
-      />
-    </div>
+    <Modal
+      onSubmit={handleSubmitForm}
+      onEditForm={handleEditForm}
+      onDelete={handleDelete}
+      visible={modal.isOpen}
+      singer={modalInput[modal.modalType].singer}
+      song={modalInput[modal.modalType].song}
+      date={modalInput[modal.modalType].date}
+      id={modalInput[modal.modalType].openId}
+      handleOpenClose={handleOpenClose}
+      handleChangeSinger={handleChangeSinger}
+      handleChangeSong={handleChangeSong}
+      handleChangeDate={handleChangeDate}
+      modalType={modal.modalType}
+    />
   );
 };
 

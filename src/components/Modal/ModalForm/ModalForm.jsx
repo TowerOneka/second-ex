@@ -1,5 +1,6 @@
 import React from "react";
 import s from "./../Modal.module.scss";
+import style from "./ModalForm.module.scss";
 
 const ModalForm = (props) => {
   let onSubmitForm = (e) => {
@@ -30,6 +31,7 @@ const ModalForm = (props) => {
             <div className={s.inputContainer}>
               <label>Singer Name</label>
               <input
+                className={style.smallInput}
                 value={props.singer}
                 onChange={handleChangeSinger}
                 required
@@ -39,6 +41,7 @@ const ModalForm = (props) => {
               <label>Song title</label>
               <input
                 id='singleName'
+                className={style.smallInput}
                 type='text'
                 value={props.song}
                 onChange={handleChangeSong}
@@ -52,11 +55,12 @@ const ModalForm = (props) => {
                 name=''
                 id=''
                 value={props.date}
+                className={style.smallInput}
                 onChange={handleChangeDate}
                 required
               />
             </div>
-            <button type='submit' className={s.submitButton}>
+            <button type='submit' className={style.submitButton}>
               Add single
             </button>
           </form>

@@ -8,7 +8,7 @@ const Single = (props) => {
     props.handleOpenCloseView(props.id);
   };
   let onOpenEdit = () => {
-    props.handleOpenCloseEdit(props.id);
+    props.handleOpenCloseEdit(props.id, props.singer, props.song, props.date);
   };
   return (
     <li className={s.single}>
@@ -35,4 +35,4 @@ const Single = (props) => {
   );
 };
 
-export default Single;
+export default React.memo(Single);

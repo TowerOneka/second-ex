@@ -3,24 +3,32 @@ import { createSelector } from "@reduxjs/toolkit";
 const selectSelf = (state) => state.playlist;
 const selectAll = (state) => state;
 export const playlistSelector = (state) => state.playlist.playlist;
-export const filterSearch = (state) => state.playlist.searchFilter;
+export const filterSearchSelector = (state) => state.playlist.searchFilter;
 export const modalSelector = (state) => state.modal;
+export const typeModalSelector = (state) => state.modal.modalType;
 
 export const searchSelector = createSelector(selectSelf, (playlist) => {
-  let items = playlist.playlist.filter(
-    (item) =>
-      item.singer.includes(playlist.searchFilter) ||
-      item.song.includes(playlist.searchFilter)
-  );
-  return items;
+  if (playlist.searchFilter == "") {
+    return playlist.playlist;
+  } else {
+    let items = playlist.playlist.filter(
+      (item) =>
+        item.singer.includes(playlist.searchFilter) ||
+        item.song.includes(playlist.searchFilter)
+    );
+    return items;
+  }
 });
 
-export const modalEdit = createSelector(playlistSelector, (playlist) => {
-  return playlist;
-});
+export const modalEditSelector = createSelector(
+  modalSelector,
+  (items) => items
+);
 
-export const modalForm = createSelector(modalSelector);
+export const modalFormSelector = createSelector(modalSelector);
 
-export const modalView = createSelector(playlistSelector, (playlist) => {
-  return playlist;
-});
+export const modalViewSelector = createSelector(
+  playlistSelector,
+  modalSelector,
+  (playlist, modal) => playlist.filter((item) => item.id == modal.openId)
+);

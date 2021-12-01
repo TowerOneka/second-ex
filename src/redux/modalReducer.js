@@ -22,6 +22,16 @@ const modalSlice = createSlice({
     CHANGE_DATE: (state, action) => {
       state.date = action.payload;
     },
+    CHANGE_INPUT: (state, action) => {
+      state.singer = action.payload.singer;
+      state.song = action.payload.song;
+      state.date = action.payload.date;
+    },
+    EMPTY_INPUT: (state, action) => {
+      state.singer = "";
+      state.song = "";
+      state.date = "";
+    },
     openClose: (state, action) => {
       state.isOpen = !state.isOpen;
       state.modalType = action.payload.type;
@@ -30,7 +40,13 @@ const modalSlice = createSlice({
   },
 });
 
-export const { CHANGE_DATE, CHANGE_SINGER, CHANGE_SONG, openClose } =
-  modalSlice.actions;
+export const {
+  CHANGE_DATE,
+  CHANGE_SINGER,
+  CHANGE_SONG,
+  openClose,
+  EMPTY_INPUT,
+  CHANGE_INPUT,
+} = modalSlice.actions;
 
 export default modalSlice.reducer;
