@@ -1,12 +1,12 @@
-.single{
-    display: flex;
-    justify-content: space-between;
-    .singleText{
-        margin: 5px 0;
-        width: 290px;
-    }
-    .openImage{
-        height: 20px;
-        cursor: pointer;
-    }
+.single {
+  display: flex;
+  justify-content: space-between;
+  .singleText {
+    margin: 5px 0;
+    width: 200px;
+  }
+  .openImage {
+    height: 20px;
+    cursor: pointer;
+  }
 }

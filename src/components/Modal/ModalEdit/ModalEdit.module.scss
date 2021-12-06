@@ -1,0 +1,24 @@
+.deleteButton {
+  cursor: pointer;
+  margin: 11px 0;
+  width: 103px;
+  height: 43px;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  color: #fff;
+  background-color: red;
+}
+.smallInput {
+  margin: 5px 0;
+  padding: 5px 0;
+  flex-grow: 1;
+}
+.submitButton {
+  cursor: pointer;
+  margin: 11px 0;
+  width: 103px;
+  height: 43px;
+  border: 2px solid #000;
+  border-radius: 20px;
+  background-color: #fff;
+}

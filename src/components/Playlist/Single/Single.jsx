@@ -1,39 +1,45 @@
-import React, { useState } from "react";
-import Modal from './../../Modal';
+import React, { useCallback } from "react";
 import s from "./Single.module.scss";
 import openIcon from "./../../../assets/images/open.png";
+import editIcon from "./../../../assets/images/editing.png";
+import linkIcon from "./../../../assets/images/link.png";
+import { NavLink } from "react-router-dom";
 
 const Single = (props) => {
-  const [isModal, setModal] = useState(false);
-  const onClose = () => setModal(false);
-
+  let onOpenView = useCallback(() => {
+    props.handleOpenCloseView(props.id);
+  }, [props.handleOpenCloseView]);
+  let onOpenEdit = useCallback(() => {
+    props.handleOpenCloseEdit(props.id, props.singer, props.song, props.date);
+  }, [props.handleOpenCloseEdit]);
   return (
     <li className={s.single}>
       <div className={s.singleText}>
         <img
           src={openIcon}
           className={s.openImage}
-          alt='View'
-          onClick={() => {
-            setModal(true);
-          }}
+          alt='view'
+          onClick={onOpenView}
         />
       </div>
-
+      <div className={s.singleText}>
+        <img
+          src={editIcon}
+          className={s.openImage}
+          alt='edit'
+          onClick={onOpenEdit}
+        />
+      </div>
+      <NavLink to={"/items/" + props.id}>
+        <div className={s.singleText}>
+          <img src={linkIcon} className={s.openImage} alt='link' />
+        </div>
+      </NavLink>
       <p className={s.singleText}>{props.singer}</p>
       <p className={s.singleText}>{props.song}</p>
       <p className={s.singleText}>{props.date}</p>
-      <Modal
-        visible={isModal}
-        modalType={"view"}
-        singer={props.singer}
-        song={props.song}
-        date={props.date}
-        onClose={onClose}
-        onSubmit={props.onSubmit}
-      />
     </li>
   );
 };
 
-export default Single;
+export default React.memo(Single);
