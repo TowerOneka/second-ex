@@ -8,11 +8,10 @@ import {
   playlistSelector,
 } from "../redux/selectors";
 import { CHANGE_INPUT, openClose } from "../redux/modalReducer";
-import HeaderContainer from "./HeaderContainer";
+import ModalContainer from "./ModalContainer";
 
 const PlaylistContainer = () => {
   let playlist = useSelector(searchSelector);
-  let search = useSelector(filterSearchSelector);
   const dispatch = useDispatch();
 
   let handleOpenCloseEdit = useCallback(
@@ -34,17 +33,20 @@ const PlaylistContainer = () => {
     },
     [dispatch]
   );
+  let handleOpenCloseForm = useCallback(() => {
+    dispatch(openClose({ type: "form" }));
+  }, [dispatch]);
   return (
-    <div className='container'>
-      <HeaderContainer />
+    <>
       <Playlist
         playlist={playlist}
         onChangeFilter={handleChangeFilter}
-        search={search}
+        handleOpenCloseForm={handleOpenCloseForm}
         handleOpenCloseEdit={handleOpenCloseEdit}
         handleOpenCloseView={handleOpenCloseView}
       />
-    </div>
+      <ModalContainer />
+    </>
   );
 };
 

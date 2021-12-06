@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import s from "./Playlist.module.scss";
 import item from "./Single/Single.module.scss";
 import Single from "./Single";
 import searchIcon from "./../../assets/images/search.png";
+import { useSearchParams } from "react-router-dom";
 
 const Playlist = (props) => {
-  let handleChange = (e) => {
-    props.onChangeFilter(e.target.value);
-  };
+  let [searchParams, setSearchParams] = useSearchParams();
+  let handleChange = useCallback(
+    (e) => {
+      let search = e.target.value;
+      if (search) {
+        setSearchParams({ search });
+        props.onChangeFilter(search);
+      } else {
+        setSearchParams({});
+      }
+    },
+    [setSearchParams]
+  );
+
+  let handleOnClick = useCallback(() => {
+    props.handleOpenCloseForm();
+  }, [props.handleOpenCloseForm]);
 
   return (
     <div className={s.playlistWrap}>
@@ -16,15 +31,19 @@ const Playlist = (props) => {
         <input
           type='text'
           className={s.searchInput}
-          value={props.search}
+          value={searchParams.get("search") || ""}
           onChange={handleChange}
         />
+        <button onClick={handleOnClick} className={s.addButton}>
+          Add single
+        </button>
       </div>
 
       <ul className={s.playlist}>
         <li className={item.single}>
           <p className={item.singleText}>View</p>
           <p className={item.singleText}>Edit</p>
+          <p className={item.singleText}>Link</p>
           <p className={item.singleText}>Singer Name</p>
           <p className={item.singleText}>Song Title</p>
           <p className={item.singleText}>Release Date</p>

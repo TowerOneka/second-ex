@@ -10,9 +10,11 @@ const Modal = (props) => {
   });
 
   const onKeydown = useCallback((e) => {
-    switch (e.key) {
-      case "Escape":
-        props.handleOpenClose();
+    if (props.visible) {
+      switch (e.key) {
+        case "Escape":
+          props.handleOpenClose();
+      }
     }
   });
   let modals = {

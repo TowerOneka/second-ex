@@ -1,16 +1,10 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Header from "./Header/Header";
-import { useDispatch } from "react-redux";
-import { openClose } from "../redux/modalReducer";
 
-const HeaderContainer = (props) => {
-  const dispatch = useDispatch();
-  let handleOpenCloseHeader = useCallback(() => {
-    dispatch(openClose({ type: "form" }));
-  }, [dispatch]);
+const HeaderContainer = () => {
   return (
     <div>
-      <Header handleOpenCloseHeader={handleOpenCloseHeader} />
+      <Header />
     </div>
   );
 };

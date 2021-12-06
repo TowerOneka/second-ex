@@ -18,14 +18,17 @@ import { modalEditSelector, modalViewSelector } from "../redux/selectors";
 
 const ModalContainer = () => {
   const modal = useSelector(modalSelector);
-  const playlistEdit = useSelector(modalEditSelector);
-  const playlistView = useSelector(modalViewSelector);
+  const ModalEdit = useSelector(modalEditSelector);
+  const ModalView = useSelector(modalViewSelector);
 
-  let modalInput = {
-    form: modal,
-    view: playlistView[0],
-    edit: playlistEdit,
-  };
+  let modals = React.useMemo(
+    () => ({
+      form: modal,
+      view: ModalView[0],
+      edit: ModalEdit,
+    }),
+    []
+  );
   const dispatch = useDispatch();
   let handleChangeSong = useCallback(
     (song) => {
@@ -77,10 +80,10 @@ const ModalContainer = () => {
       onEditForm={handleEditForm}
       onDelete={handleDelete}
       visible={modal.isOpen}
-      singer={modalInput[modal.modalType].singer}
-      song={modalInput[modal.modalType].song}
-      date={modalInput[modal.modalType].date}
-      id={modalInput[modal.modalType].openId}
+      singer={modals[modal.modalType].singer}
+      song={modals[modal.modalType].song}
+      date={modals[modal.modalType].date}
+      id={modals[modal.modalType].openId}
       handleOpenClose={handleOpenClose}
       handleChangeSinger={handleChangeSinger}
       handleChangeSong={handleChangeSong}

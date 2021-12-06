@@ -37,6 +37,9 @@ const modalSlice = createSlice({
       state.modalType = action.payload.type;
       state.openId = action.payload.id;
     },
+    SET_OPENID: (state, action) => {
+      state.openId = action.payload;
+    },
   },
 });
 
@@ -47,6 +50,7 @@ export const {
   openClose,
   EMPTY_INPUT,
   CHANGE_INPUT,
+  SET_OPENID,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

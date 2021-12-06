@@ -1,14 +1,15 @@
 import { createSelector } from "@reduxjs/toolkit";
+import { useParams } from "react-router";
 
 const selectSelf = (state) => state.playlist;
-const selectAll = (state) => state;
+const selectRouter = (state) => state;
 export const playlistSelector = (state) => state.playlist.playlist;
 export const filterSearchSelector = (state) => state.playlist.searchFilter;
 export const modalSelector = (state) => state.modal;
 export const typeModalSelector = (state) => state.modal.modalType;
 
 export const searchSelector = createSelector(selectSelf, (playlist) => {
-  if (playlist.searchFilter == "") {
+  if (!playlist.searchFilter) {
     return playlist.playlist;
   } else {
     let items = playlist.playlist.filter(
