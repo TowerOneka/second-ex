@@ -7,10 +7,10 @@ import {
   filterSearchSelector,
   searchSelector,
   playlistSelector,
-  useCustomSelector,
 } from "../redux/selectors";
 import { CHANGE_INPUT, openClose } from "../redux/modalReducer";
 import ModalContainer from "./ModalContainer";
+import { useCustomSelector } from "./../redux/hooks";
 
 const PlaylistContainer = () => {
   let [searchParams, setSearchParams] = useSearchParams();

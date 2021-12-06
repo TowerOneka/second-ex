@@ -1,6 +1,4 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { useMemo } from "react";
-import { useSelector } from "react-redux";
 
 const selectSelf = (state) => state.playlist;
 const selectRouter = (state) => state;
@@ -23,15 +21,6 @@ export const searchSelector = createSelector(
     }
   }
 );
-
-export const useCustomSelector = (selector, search) => {
-  const selectPlaylist = useMemo(selector, []);
-
-  const playlist = useSelector((state) => {
-    selectPlaylist(state, search);
-  });
-  return playlist;
-};
 
 export const modalEditSelector = createSelector(
   modalSelector,
