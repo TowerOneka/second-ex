@@ -2,16 +2,32 @@ import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Playlist from "./Playlist/Playlist";
 import { CHANGE_FILTER } from "../redux/playlistReducer";
+import { useSearchParams } from "react-router-dom";
 import {
   filterSearchSelector,
   searchSelector,
   playlistSelector,
+  useCustomSelector,
 } from "../redux/selectors";
 import { CHANGE_INPUT, openClose } from "../redux/modalReducer";
 import ModalContainer from "./ModalContainer";
 
 const PlaylistContainer = () => {
-  let playlist = useSelector(searchSelector);
+  let [searchParams, setSearchParams] = useSearchParams();
+  let handleChange = useCallback(
+    (e) => {
+      let search = e.target.value;
+      if (search) {
+        setSearchParams({ search });
+      } else {
+        setSearchParams({});
+      }
+    },
+    [setSearchParams]
+  );
+  let playlist = useCustomSelector(searchSelector, searchParams);
+  /* let playlist = useSelector((state) => searchSelector(state, searchParams)); */
+  console.log(playlist);
   const dispatch = useDispatch();
 
   let handleOpenCloseEdit = useCallback(
@@ -40,6 +56,8 @@ const PlaylistContainer = () => {
     <>
       <Playlist
         playlist={playlist}
+        searchParams={searchParams}
+        handleChange={handleChange}
         onChangeFilter={handleChangeFilter}
         handleOpenCloseForm={handleOpenCloseForm}
         handleOpenCloseEdit={handleOpenCloseEdit}

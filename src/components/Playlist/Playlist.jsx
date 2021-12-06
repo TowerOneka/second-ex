@@ -3,23 +3,8 @@ import s from "./Playlist.module.scss";
 import item from "./Single/Single.module.scss";
 import Single from "./Single";
 import searchIcon from "./../../assets/images/search.png";
-import { useSearchParams } from "react-router-dom";
 
 const Playlist = (props) => {
-  let [searchParams, setSearchParams] = useSearchParams();
-  let handleChange = useCallback(
-    (e) => {
-      let search = e.target.value;
-      if (search) {
-        setSearchParams({ search });
-        props.onChangeFilter(search);
-      } else {
-        setSearchParams({});
-      }
-    },
-    [setSearchParams]
-  );
-
   let handleOnClick = useCallback(() => {
     props.handleOpenCloseForm();
   }, [props.handleOpenCloseForm]);
@@ -31,8 +16,8 @@ const Playlist = (props) => {
         <input
           type='text'
           className={s.searchInput}
-          value={searchParams.get("search") || ""}
-          onChange={handleChange}
+          value={props.searchParams.get("search") || ""}
+          onChange={props.handleChange}
         />
         <button onClick={handleOnClick} className={s.addButton}>
           Add single

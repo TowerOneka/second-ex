@@ -1,5 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { useParams } from "react-router";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
 
 const selectSelf = (state) => state.playlist;
 const selectRouter = (state) => state;
@@ -8,18 +9,29 @@ export const filterSearchSelector = (state) => state.playlist.searchFilter;
 export const modalSelector = (state) => state.modal;
 export const typeModalSelector = (state) => state.modal.modalType;
 
-export const searchSelector = createSelector(selectSelf, (playlist) => {
-  if (!playlist.searchFilter) {
-    return playlist.playlist;
-  } else {
-    let items = playlist.playlist.filter(
-      (item) =>
-        item.singer.includes(playlist.searchFilter) ||
-        item.song.includes(playlist.searchFilter)
-    );
-    return items;
+export const searchSelector = createSelector(
+  playlistSelector,
+  (_, search) => search.get("search"),
+  (playlist, search) => {
+    if (!search) {
+      return playlist;
+    } else {
+      let items = playlist.filter(
+        (item) => item.singer.includes(search) || item.song.includes(search)
+      );
+      return items;
+    }
   }
-});
+);
+
+export const useCustomSelector = (selector, search) => {
+  const selectPlaylist = useMemo(selector, []);
+
+  const playlist = useSelector((state) => {
+    selectPlaylist(state, search);
+  });
+  return playlist;
+};
 
 export const modalEditSelector = createSelector(
   modalSelector,
