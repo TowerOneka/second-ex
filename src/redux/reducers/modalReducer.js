@@ -23,6 +23,7 @@ const modalSlice = createSlice({
       state.date = action.payload;
     },
     CHANGE_INPUT: (state, action) => {
+      console.log(action.payload);
       state.singer = action.payload.singer;
       state.song = action.payload.song;
       state.date = action.payload.date;

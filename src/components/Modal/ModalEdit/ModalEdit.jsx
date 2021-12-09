@@ -3,7 +3,6 @@ import s from "./../Modal.module.scss";
 import style from "./ModalEdit.module.scss";
 
 const ModalEdit = (props) => {
-  console.log(props.id);
   let handleChangeSinger = (e) => {
     props.handleChangeSinger(e.target.value);
   };

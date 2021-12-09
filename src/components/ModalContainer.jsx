@@ -7,14 +7,17 @@ import {
   CHANGE_SONG,
   EMPTY_INPUT,
   openClose,
-} from "../redux/modalReducer";
+} from "../redux/reducers/modalReducer";
 import {
   ADD_SINGLE,
   EDIT_SINGLE,
   DELETE_SINGLE,
-} from "../redux/playlistReducer";
-import { modalSelector } from "../redux/selectors";
-import { modalEditSelector, modalViewSelector } from "../redux/selectors";
+} from "../redux/reducers/playlistReducer";
+import { modalSelector } from "../redux/selectors/selectors";
+import {
+  modalEditSelector,
+  modalViewSelector,
+} from "../redux/selectors/selectors";
 
 const ModalContainer = () => {
   const modal = useSelector(modalSelector);
@@ -27,7 +30,7 @@ const ModalContainer = () => {
       view: ModalView[0],
       edit: ModalEdit,
     }),
-    []
+    [modal, ModalView, ModalEdit]
   );
   const dispatch = useDispatch();
   let handleChangeSong = useCallback(
@@ -54,21 +57,24 @@ const ModalContainer = () => {
   }, [dispatch]);
   const handleSubmitForm = useCallback(
     (singer, song, date) => {
-      dispatch(ADD_SINGLE({ singer: singer, song: song, date: date }));
+      dispatch({ type: "ADD_SINGLE", single: { singer, song, date } });
       dispatch(EMPTY_INPUT());
     },
     [dispatch]
   );
   const handleEditForm = useCallback(
     (id, singer, song, date) => {
-      dispatch(EDIT_SINGLE({ id: id, singer: singer, song: song, date: date }));
+      dispatch({
+        type: "EDIT_SINGLE",
+        payload: { id: id, singer: singer, song: song, date: date },
+      });
       dispatch(EMPTY_INPUT());
     },
     [dispatch]
   );
   const handleDelete = useCallback(
     (id) => {
-      dispatch(DELETE_SINGLE(id));
+      dispatch({ type: "DELETE_SINGLE", payload: id });
       dispatch(EMPTY_INPUT());
     },
     [dispatch]

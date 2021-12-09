@@ -3,6 +3,7 @@ import s from "./Playlist.module.scss";
 import item from "./Single/Single.module.scss";
 import Single from "./Single";
 import searchIcon from "./../../assets/images/search.png";
+import Fetcing from "./../Fetching";
 
 const Playlist = (props) => {
   let handleOnClick = useCallback(() => {
@@ -23,32 +24,35 @@ const Playlist = (props) => {
           Add single
         </button>
       </div>
-
-      <ul className={s.playlist}>
-        <li className={item.single}>
-          <p className={item.singleText}>View</p>
-          <p className={item.singleText}>Edit</p>
-          <p className={item.singleText}>Link</p>
-          <p className={item.singleText}>Singer Name</p>
-          <p className={item.singleText}>Song Title</p>
-          <p className={item.singleText}>Release Date</p>
-        </li>
-        {props.playlist.map((single) => (
-          <Single
-            key={single.id}
-            id={single.id}
-            singer={single.singer}
-            song={single.song}
-            date={single.date}
-            onSubmitEdit={props.onEditForm}
-            handleOpenCloseEdit={props.handleOpenCloseEdit}
-            handleOpenCloseView={props.handleOpenCloseView}
-            onDelete={props.onDelete}
-          />
-        ))}
-      </ul>
+      {props.isFetching ? (
+        <Fetcing />
+      ) : (
+        <ul className={s.playlist}>
+          <li className={item.single}>
+            <p className={item.singleText}>View</p>
+            <p className={item.singleText}>Edit</p>
+            <p className={item.singleText}>Link</p>
+            <p className={item.singleText}>Singer Name</p>
+            <p className={item.singleText}>Song Title</p>
+            <p className={item.singleText}>Release Date</p>
+          </li>
+          {props.playlist.map((single) => (
+            <Single
+              key={single.id}
+              id={single.id}
+              singer={single.singer}
+              song={single.song}
+              date={single.date}
+              onSubmitEdit={props.onEditForm}
+              handleOpenCloseEdit={props.handleOpenCloseEdit}
+              handleOpenCloseView={props.handleOpenCloseView}
+              onDelete={props.onDelete}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
 
-export default React.memo(Playlist);
+export default Playlist;

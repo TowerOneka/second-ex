@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
-import { modalViewSelector } from "../redux/selectors";
-import { SET_OPENID } from "../redux/modalReducer";
+import {
+  modalEditSelector,
+  fetchingSelector,
+} from "../redux/selectors/selectors";
+import { SET_OPENID } from "../redux/reducers/modalReducer";
 import { useDispatch } from "react-redux";
 import Item from "../Item";
+import Fetcing from "./Fetching";
 
 const ItemsContainer = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
   let itemId = params.itemId;
-  dispatch(SET_OPENID(itemId));
-  let itemArr = useSelector(modalViewSelector);
-  let item = itemArr[0];
+  const isFetching = useSelector(fetchingSelector);
+  useEffect(() => {
+    dispatch({ type: "GET_CURRENT_SINGLE", payload: itemId });
+  }, [dispatch]);
 
-  return (
+  let item = useSelector(modalEditSelector);
+
+  return isFetching ? (
+    <Fetcing />
+  ) : (
     <Item id={item.id} singer={item.singer} song={item.song} date={item.date} />
   );
 };
