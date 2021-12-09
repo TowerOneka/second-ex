@@ -16,10 +16,6 @@ import { useCustomSelector } from "./../redux/hooks/hooks";
 const PlaylistContainer = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch({ type: "LOAD_PLAYLIST" });
-  }, [dispatch]);
-
   const isFetching = useSelector(fetchingSelector);
 
   let [searchParams, setSearchParams] = useSearchParams();

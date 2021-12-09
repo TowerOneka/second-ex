@@ -1,4 +1,13 @@
-import { takeEvery, all, call, fork, put, apply } from "redux-saga/effects";
+import { LOCATION_CHANGE } from "connected-react-router";
+import {
+  takeEvery,
+  all,
+  call,
+  fork,
+  put,
+  apply,
+  take,
+} from "redux-saga/effects";
 import { CHANGE_INPUT } from "../reducers/modalReducer";
 import {
   ADD_SINGLE,
@@ -32,7 +41,7 @@ function* deleteSingle(itemId) {
 }
 
 function* getCurrentSingle(itemId) {
-  const request = yield myApi.getCurrentSingle(itemId.payload);
+  const request = yield myApi.getCurrentSingle(itemId);
 
   yield put({ type: CHANGE_INPUT, payload: request });
 }
@@ -48,7 +57,15 @@ function* watchDeleteSingle() {
 }
 
 function* watchGetCurrentSingle() {
-  yield takeEvery("GET_CURRENT_SINGLE", getCurrentSingle);
+  while (true) {
+    const action = yield take(LOCATION_CHANGE);
+    if (action.payload.location.pathname.startsWith("/items/")) {
+      yield fork(
+        getCurrentSingle,
+        action.payload.location.pathname.substring(7, 9)
+      );
+    }
+  }
 }
 
 function* watchEditSingle() {
@@ -56,7 +73,13 @@ function* watchEditSingle() {
 }
 
 function* watchLoadPlaylist() {
-  yield takeEvery("LOAD_PLAYLIST", loadPlaylist);
+  while (true) {
+    const action = yield take(LOCATION_CHANGE);
+
+    if (action.payload.location.pathname.endsWith("/")) {
+      yield fork(loadPlaylist);
+    }
+  }
 }
 
 function* watchAddSingle() {

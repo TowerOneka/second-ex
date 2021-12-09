@@ -11,9 +11,9 @@ let App = () => {
         <BrowserRouter>
           <HeaderContainer />
           <Routes>
-            <Route path='/' element={<PlaylistContainer />} />
+            <Route path='/' element={<PlaylistContainer />} exact />
 
-            <Route path='/items/:itemId' element={<ItemsContainer />} />
+            <Route path='/items/:itemId' element={<ItemsContainer />} exact />
           </Routes>
         </BrowserRouter>
       </div>
