@@ -6,7 +6,9 @@ const instanse = axios.create({
 
 export const myApi = {
   fetch() {
-    return instanse.get("/playlist").then((response) => response.data);
+    return instanse.get("/playlist").then((response) => {
+      return response.data;
+    });
   },
 
   postSingle(single) {
@@ -24,9 +26,9 @@ export const myApi = {
   },
 
   getCurrentSingle(itemId) {
-    return instanse
-      .get(`/playlist/${itemId}`)
-      .then((response) => response.data);
+    return instanse.get(`/playlist/${itemId}`).then((response) => {
+      return response.data;
+    });
   },
   editSingle(single) {
     console.log(single);

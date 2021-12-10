@@ -7,6 +7,7 @@ import {
   put,
   apply,
   take,
+  spawn,
 } from "redux-saga/effects";
 import { CHANGE_INPUT } from "../reducers/modalReducer";
 import {
@@ -19,7 +20,7 @@ import {
 import { myApi } from "./../../API/api";
 
 function* AddSingle(params) {
-  const { request } = yield myApi.postSingle(params);
+  const request = yield call(myApi.postSingle, params);
 
   yield put({ type: ADD_SINGLE, payload: params });
 }
@@ -27,7 +28,7 @@ function* AddSingle(params) {
 function* loadPlaylist() {
   yield put({ type: CHANGE_FETCH });
 
-  const request = yield myApi.fetch();
+  const request = yield call(myApi.fetch);
 
   yield put({ type: PLAYLIST_LOADED, payload: request });
 
@@ -35,19 +36,19 @@ function* loadPlaylist() {
 }
 
 function* deleteSingle(itemId) {
-  const request = yield myApi.deleteSingle(itemId.payload);
+  const request = yield call(myApi.deleteSingle, itemId.payload);
 
   yield put({ type: DELETE_SINGLE, payload: itemId.payload });
 }
 
 function* getCurrentSingle(itemId) {
-  const request = yield myApi.getCurrentSingle(itemId);
+  const request = yield call(myApi.getCurrentSingle, itemId);
 
   yield put({ type: CHANGE_INPUT, payload: request });
 }
 
 function* editSingle(single) {
-  const request = yield myApi.editSingle(single.payload);
+  const request = yield call(myApi.editSingle, single.payload);
 
   yield put({ type: EDIT_SINGLE, payload: single.payload });
 }
@@ -75,7 +76,7 @@ function* watchEditSingle() {
 function* watchLoadPlaylist() {
   while (true) {
     const action = yield take(LOCATION_CHANGE);
-
+    console.log(action);
     if (action.payload.location.pathname.endsWith("/")) {
       yield fork(loadPlaylist);
     }
@@ -87,11 +88,9 @@ function* watchAddSingle() {
 }
 
 export function* rootSaga() {
-  yield all([
-    watchLoadPlaylist(),
-    watchAddSingle(),
-    watchGetCurrentSingle(),
-    watchDeleteSingle(),
-    watchEditSingle(),
-  ]);
+  yield spawn(watchLoadPlaylist);
+  yield spawn(watchAddSingle);
+  yield spawn(watchGetCurrentSingle);
+  yield spawn(watchDeleteSingle);
+  yield spawn(watchEditSingle);
 }

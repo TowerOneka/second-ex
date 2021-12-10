@@ -11,14 +11,7 @@ import Item from "../Item";
 import Fetcing from "./Fetching";
 
 const ItemsContainer = (props) => {
-  const params = useParams();
-  const dispatch = useDispatch();
-  let itemId = params.itemId;
   const isFetching = useSelector(fetchingSelector);
-  useEffect(() => {
-    dispatch({ type: "GET_CURRENT_SINGLE", payload: itemId });
-  }, [dispatch]);
-
   let item = useSelector(modalEditSelector);
 
   return isFetching ? (
