@@ -1,4 +1,4 @@
-import { LOCATION_CHANGE } from "connected-react-router";
+import { LOCATION_CHANGE, push } from "connected-react-router";
 import {
   takeEvery,
   all,
@@ -20,37 +20,54 @@ import {
 import { myApi } from "./../../API/api";
 
 function* AddSingle(params) {
-  const request = yield call(myApi.postSingle, params);
-
-  yield put({ type: ADD_SINGLE, payload: params });
+  try {
+    const request = yield call(myApi.postSingle, params);
+    yield put({ type: ADD_SINGLE, payload: params });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function* loadPlaylist() {
   yield put({ type: CHANGE_FETCH });
 
-  const request = yield call(myApi.fetch);
-
-  yield put({ type: PLAYLIST_LOADED, payload: request });
+  try {
+    const request = yield call(myApi.fetch);
+    yield put({ type: PLAYLIST_LOADED, payload: request });
+  } catch (e) {
+    console.log(e);
+  }
 
   yield put({ type: CHANGE_FETCH });
 }
 
 function* deleteSingle(itemId) {
-  const request = yield call(myApi.deleteSingle, itemId.payload);
+  try {
+    const request = yield call(myApi.deleteSingle, itemId.payload);
 
-  yield put({ type: DELETE_SINGLE, payload: itemId.payload });
+    yield put({ type: DELETE_SINGLE, payload: itemId.payload });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function* getCurrentSingle(itemId) {
-  const request = yield call(myApi.getCurrentSingle, itemId);
+  try {
+    const request = yield call(myApi.getCurrentSingle, itemId);
 
-  yield put({ type: CHANGE_INPUT, payload: request });
+    yield put({ type: CHANGE_INPUT, payload: request });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function* editSingle(single) {
-  const request = yield call(myApi.editSingle, single.payload);
-
-  yield put({ type: EDIT_SINGLE, payload: single.payload });
+  try {
+    const request = yield call(myApi.editSingle, single.payload);
+    yield put({ type: EDIT_SINGLE, payload: single.payload });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function* watchDeleteSingle() {
