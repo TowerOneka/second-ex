@@ -1,23 +1,22 @@
 import "./App.scss";
 import PlaylistContainer from "./components/PlaylistContainer";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ItemsContainer from "./components/ItemsContainer";
 import HeaderContainer from "./components/HeaderContainer";
+import { Route, Switch } from "react-router-dom";
 
 let App = () => {
   return (
-    <>
-      <div className='container'>
-        <Router>
-          <HeaderContainer />
-          <Routes>
-            <Route exact path='/' element={<PlaylistContainer />} />
-
-            <Route path='/items/:itemId' element={<ItemsContainer />} />
-          </Routes>
-        </Router>
-      </div>
-    </>
+    <div className='container'>
+      <HeaderContainer />
+      <Switch>
+        <Route path='/' exact>
+          <PlaylistContainer />
+        </Route>
+        <Route path='/items/:itemId'>
+          <ItemsContainer />
+        </Route>
+      </Switch>
+    </div>
   );
 };
 

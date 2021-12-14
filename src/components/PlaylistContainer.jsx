@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Playlist from "./Playlist/Playlist";
 import { CHANGE_FILTER } from "../redux/reducers/playlistReducer";
-import { useSearchParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   filterSearchSelector,
   searchSelector,
@@ -16,21 +16,34 @@ import { useCustomSelector } from "./../redux/hooks/hooks";
 const PlaylistContainer = () => {
   const dispatch = useDispatch();
 
+  function useQuery() {
+    const { search } = useLocation();
+
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+
   const isFetching = useSelector(fetchingSelector);
 
-  let [searchParams, setSearchParams] = useSearchParams();
+  let searchParams = useQuery();
 
-  let handleChange = useCallback(
-    (e) => {
-      let search = e.target.value;
-      if (search) {
-        setSearchParams({ search });
-      } else {
-        setSearchParams({});
-      }
-    },
-    [setSearchParams]
-  );
+  const history = useHistory();
+
+  console.log(searchParams);
+
+  let handleChange = useCallback((e) => {
+    let search = e.target.value;
+    if (search) {
+      history.push({
+        pathname: "/",
+        search: `?search=${search}`,
+      });
+    } else {
+      history.push({
+        pathname: "/",
+        search: "",
+      });
+    }
+  }, []);
 
   let playlist = useCustomSelector(searchSelector, searchParams);
 

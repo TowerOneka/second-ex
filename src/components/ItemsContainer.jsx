@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router";
+import React from "react";
 import { useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import {
   modalEditSelector,
   fetchingSelector,

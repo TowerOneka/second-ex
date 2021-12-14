@@ -5,8 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ConnectedRouter } from "connected-react-router";
 import { Provider } from "react-redux";
-import store from "./redux/reduxStore";
-import { history } from "./redux/reduxStore";
+import store, { history } from "./redux/reduxStore";
 
 ReactDOM.render(
   <React.StrictMode>
