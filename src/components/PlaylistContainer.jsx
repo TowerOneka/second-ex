@@ -28,8 +28,6 @@ const PlaylistContainer = () => {
 
   const history = useHistory();
 
-  console.log(searchParams);
-
   let handleChange = useCallback((e) => {
     let search = e.target.value;
     if (search) {

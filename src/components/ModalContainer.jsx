@@ -8,11 +8,6 @@ import {
   EMPTY_INPUT,
   openClose,
 } from "../redux/reducers/modalReducer";
-import {
-  ADD_SINGLE,
-  EDIT_SINGLE,
-  DELETE_SINGLE,
-} from "../redux/reducers/playlistReducer";
 import { modalSelector } from "../redux/selectors/selectors";
 import {
   modalEditSelector,
