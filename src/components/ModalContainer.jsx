@@ -67,6 +67,16 @@ const ModalContainer = () => {
     },
     [dispatch]
   );
+  const handleEditForm = useCallback(
+    (id, singer, song, date) => {
+      dispatch({
+        type: "EDIT_SINGLE",
+        payload: { id: id, singer: singer, song: song, date: date },
+      });
+      dispatch(EMPTY_INPUT());
+    },
+    [dispatch]
+  );
   const handleDelete = useCallback(
     (id) => {
       dispatch({ type: "DELETE_SINGLE", payload: id });
